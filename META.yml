@@ -1,0 +1,32 @@
+---
+abstract: 'The authentication middeleware collection for Plack.'
+author:
+  - 'Kang-min Liu <gugod@gugod.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+  Test::More: 0.42
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
+distribution_type: module
+generated_by: 'Module::Install version 1.00'
+license: mit
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+module_name: Doorman
+name: Doorman
+no_index:
+  directory:
+    - examples
+    - inc
+    - t
+recommends:
+  LWPx::ParanoidAgent: 1.07
+  Net::OpenID::Consumer: 1.03
+  Net::Twitter::Lite: 1.03
+requires:
+  Plack: 0.9963
+  perl: 5.10.0
+resources:
+  license: http://opensource.org/licenses/mit-license.php
+version: 0.01
