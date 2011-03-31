@@ -1,7 +1,6 @@
 Changes
 examples/openid-auth.pl
 examples/twitter-auth.pl
-examples/twitter.yml
 examples/twitter.yml.example
 inc/Module/Install.pm
 inc/Module/Install/AuthorTests.pm

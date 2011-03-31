@@ -19,14 +19,15 @@ no_index:
   directory:
     - examples
     - inc
-    - t
 recommends:
+  IO::Socket::SSL: 1.39
   LWPx::ParanoidAgent: 1.07
   Net::OpenID::Consumer: 1.03
   Net::Twitter::Lite: 1.03
 requires:
   Plack: 0.9963
+  Plack::Middleware::Session: 0.13
   perl: 5.10.0
 resources:
   license: http://opensource.org/licenses/mit-license.php
-version: 0.01
+version: 0.02
