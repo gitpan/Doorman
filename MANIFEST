@@ -1,6 +1,7 @@
 .shipit
 Changes
 examples/openid-auth.pl
+examples/openid-with-local.psgi
 examples/twitter-auth.pl
 examples/twitter.yml.example
 inc/Module/Install.pm
@@ -13,6 +14,7 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Doorman.pm
+lib/Doorman/Manual.pod
 lib/Doorman/PlackMiddleware.pm
 lib/Plack/Middleware/DoormanAuthentication.pm
 lib/Plack/Middleware/DoormanOpenID.pm
