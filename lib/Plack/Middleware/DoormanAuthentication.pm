@@ -9,59 +9,35 @@ our $AUTHORITY = $Doorman::AUTHORITY;
 use feature qw(switch);
 use parent 'Doorman::PlackMiddleware';
 
-use Plack::Util::Accessor qw(root_url scope authenticator);
+use Plack::Util::Accessor qw(authenticator);
 use Plack::Session;
 
-use Scalar::Util qw(weaken);
-
-sub prepare_app {
-    my $self = shift;
-    $self->scope('users') unless $self->scope;
-}
-
-sub _session_key {
-    my ($self, $key) = @_;
-    return "doorman." . $self->scope . ".authentication" . ( $key ? ".$key" : "");
-}
-
 sub is_sign_in {
-    my ($self) = @_;
-    my $env = $self->{env};
-    my $session = Plack::Session->new($env);
-    return $session->get( $self->_session_key("authenticated") );
+    $_[0]->session_get("authenticated");
 }
 
 sub call {
     my ($self, $env) = @_;
+
+    $self->prepare_call($env);
+
+    $env->{ $self->fq } = $self;
+
     my $request = Plack::Request->new($env);
-    my $session = Plack::Session->new($env);
-    die "Session is required for Doorman.\n" unless $session;
-
-    $self->{env} = $env;
-    weaken($self->{env});
-
-
-    if (!$self->root_url) {
-        my $root_uri = $request->uri;
-        $root_uri->path("");
-        $self->root_url($root_uri->as_string);
-    }
-
-    $env->{ $self->_session_key } = $self;
 
     given([$request->method, $request->path]) {
         when(['POST', $self->sign_in_path]) {
             my ($success, $error_message) = $self->authenticator->($self, $self->{env});
             if ($success) {
-                $session->set($self->_session_key("authenticated"), $success);
+                $self->session_set("authenticated" => $success);
             }
             else {
-                $env->{ $self->_session_key("error") } = $error_message;
+                $self->env_set("error" => $error_message);
             }
         }
 
         when(['GET', $self->sign_out_path]) {
-            $session->remove( $self->_session_key("authenticated") );
+            $self->session_remove("authenticated");
         }
     }
 
